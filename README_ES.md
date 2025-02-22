@@ -510,6 +510,16 @@ A continuación, explicamos cómo insertar el widget en diferentes ubicaciones.
 
 > 🔹 **Consejo:** Este método es ideal si deseas colocar el slider dentro de un bloque CMS, en la home, o en páginas personalizadas.
 
+![image](https://github.com/user-attachments/assets/0724f5e5-5a98-4ebd-aa0d-bf8016f94a8a)
+
+![image](https://github.com/user-attachments/assets/eb25170d-e97b-49ff-8754-ad0ec7198eae)
+
+
+
+![image](https://github.com/user-attachments/assets/72818cfc-6167-4d3b-9992-b2ac64f14013)
+
+![image](https://github.com/user-attachments/assets/356450d2-dfe9-4d58-bb89-fe5878546f82)
+
 ---
 
 ## 📌 Método 2: Agregar el Widget en un Layout XML
