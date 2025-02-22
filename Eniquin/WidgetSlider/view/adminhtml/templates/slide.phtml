@@ -1,0 +1,196 @@
+<?php
+/**
+ * @var \Magento\Backend\Block\Template $block
+ */
+$desktopImage = $block->getData('desktopImageVal'); // Desktop Image
+$mobileImage  = $block->getData('mobileImageVal');  // Mobile Image
+$btnText1     = $block->getData('btnText1Val');
+$btnUrl1      = $block->getData('btnUrl1Val');
+$btnText2     = $block->getData('btnText2Val');
+$btnUrl2      = $block->getData('btnUrl2Val');
+$btnText3     = $block->getData('btnText3Val');
+$btnUrl3      = $block->getData('btnUrl3Val');
+
+$labelRemove = $block->getData('label_remove_row');
+$isClone     = $block->getData('is_clone');
+$uniqueId    = uniqid(); // To identify each slide and not clash IDs
+?>
+<div class="admin__field field <?= $isClone ? 'field-to-clone' : 'field-clone' ?>"
+     <?= $isClone ? 'style="display:none;"' : '' ?>>
+    <div class="admin__field-control control">
+
+        <!-- Group for desktop image -->
+        <div class="image-field-group">
+            <label for="desktop-image-<?= $uniqueId ?>">Desktop Image:</label>
+            <div class="image-input-container">
+                <input
+                    type="text"
+                    id="desktop-image-<?= $uniqueId ?>"
+                    class="slide-field desktop-image"
+                    value="<?= $block->escapeHtml($desktopImage) ?>"
+                />
+                <button
+                    type="button"
+                    class="admin__control-btn"
+                    onclick="openMediaGallery('desktop-image-<?= $uniqueId ?>')"
+                >
+                    [Media Gallery]
+                </button>
+            </div>
+        </div>
+
+        <!-- Group for mobile image -->
+        <div class="image-field-group">
+            <label for="mobile-image-<?= $uniqueId ?>">Mobile Image:</label>
+            <div class="image-input-container">
+                <input
+                    type="text"
+                    id="mobile-image-<?= $uniqueId ?>"
+                    class="slide-field mobile-image"
+                    value="<?= $block->escapeHtml($mobileImage) ?>"
+                />
+                <button
+                    type="button"
+                    class="admin__control-btn"
+                    onclick="openMediaGallery('mobile-image-<?= $uniqueId ?>')"
+                >
+                    [Media Gallery]
+                </button>
+            </div>
+        </div>
+
+        <!-- Button 1 -->
+        <div class="button-field-group">
+            <label>Button #1 Text / URL:</label>
+            <div class="btn-url-container">
+                <input
+                    type="text"
+                    class="slide-field btn-text1"
+                    value="<?= $block->escapeHtml($btnText1) ?>"
+                    placeholder="Button 1 text"
+                />
+                <input
+                    type="text"
+                    class="slide-field btn-url1"
+                    value="<?= $block->escapeHtml($btnUrl1) ?>"
+                    placeholder="https://..."
+                />
+            </div>
+        </div>
+
+        <!-- Button 2 -->
+        <div class="button-field-group">
+            <label>Button #2 Text / URL:</label>
+            <div class="btn-url-container">
+                <input
+                    type="text"
+                    class="slide-field btn-text2"
+                    value="<?= $block->escapeHtml($btnText2) ?>"
+                    placeholder="Button 2 text"
+                />
+                <input
+                    type="text"
+                    class="slide-field btn-url2"
+                    value="<?= $block->escapeHtml($btnUrl2) ?>"
+                    placeholder="https://..."
+                />
+            </div>
+        </div>
+
+        <!-- Button 3 -->
+        <div class="button-field-group">
+            <label>Button #3 Text / URL:</label>
+            <div class="btn-url-container">
+                <input
+                    type="text"
+                    class="slide-field btn-text3"
+                    value="<?= $block->escapeHtml($btnText3) ?>"
+                    placeholder="Button 3 text"
+                />
+                <input
+                    type="text"
+                    class="slide-field btn-url3"
+                    value="<?= $block->escapeHtml($btnUrl3) ?>"
+                    placeholder="https://..."
+                />
+            </div>
+        </div>
+
+        <!-- Hidden field where values are concatenated to save them in DB -->
+        <input type="hidden" name="parameters[slides][]" class="slide-hidden" />
+
+        <br />
+        <a href="#" class="clone_remove"><?= $labelRemove ?: '[Remove Slide]' ?></a>
+    </div>
+</div>
+
+<!-- Script to synchronize values to the hidden input and invoke the media gallery -->
+<script type="text/javascript">
+require([
+    'jquery',
+    'mage/adminhtml/browser'
+], function($){
+    window.openMediaGallery = function(fieldId) {
+        var mediaGalleryUrl = '<?= $block->getUrl('cms/wysiwyg_images/index', ['type' => 'image']) ?>';
+        MediabrowserUtility.openDialog(
+            mediaGalleryUrl,
+            false,
+            false,
+            '<?= __('Select Image') ?>',
+            {
+                targetElementId: fieldId,
+                onInsertUrl: '<?= $block->getUrl('cms/wysiwyg_images/onInsert') ?>',
+                modalClosePath: '<?= $block->getUrl('cms/wysiwyg_images/close') ?>',
+                onInsert: function(items) {
+                    if (!items || !items.length) {
+                        return;
+                    }
+                    var item = items[0];
+                    // Update the value of the input and trigger the input event
+                    $('#' + fieldId).val(item).trigger('input');
+                    // Force the update of the hidden field
+                    updateHidden($('#' + fieldId).closest('.admin__field'));
+                }
+            }
+        );
+    };
+
+    // Function to update the hidden field (move it outside of document.ready)
+    function updateHidden($row) {
+        // desktopImage|mobileImage|btnText1|btnUrl1|btnText2|btnUrl2|btnText3|btnUrl3
+        let desktopImg = $row.find('.desktop-image').val() || '';
+        let mobileImg  = $row.find('.mobile-image').val()  || '';
+
+        let t1 = $row.find('.btn-text1').val() || '';
+        let u1 = $row.find('.btn-url1').val()  || '';
+
+        let t2 = $row.find('.btn-text2').val() || '';
+        let u2 = $row.find('.btn-url2').val()  || '';
+
+        let t3 = $row.find('.btn-text3').val() || '';
+        let u3 = $row.find('.btn-url3').val()  || '';
+
+        let joined = `${desktopImg}|${mobileImg}|${t1}|${u1}|${t2}|${u2}|${t3}|${u3}`;
+        $row.find('.slide-hidden').val(joined);
+    }
+
+    $(document).ready(function(){
+        // Update on each change
+        $(document).on('input change', '.slide-field', function() {
+            updateHidden($(this).closest('.admin__field'));
+        });
+
+        // Initialize on load
+        $('.admin__field.field-clone').each(function() {
+            updateHidden($(this));
+        });
+
+        // Add listener for custom event of inserting media
+        $(document).on('mediaInserted', function(e, data) {
+            if (data && data.fieldId) {
+                updateHidden($('#' + data.fieldId).closest('.admin__field'));
+            }
+        });
+    });
+});
+</script>

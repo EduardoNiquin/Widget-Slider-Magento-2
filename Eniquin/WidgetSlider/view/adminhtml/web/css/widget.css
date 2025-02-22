@@ -1,0 +1,441 @@
+div#widget_options_Eniquin\\WidgetSlider\\Block\\Widget\\SlideWidget {
+    /* Main Container in Page Builder */
+    .content.ui-sortable {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.25rem;
+        padding: 1.25rem;
+        background: #f8f8f8;
+        border: 1px solid #e3e3e3;
+        border-radius: 4px;
+    }
+
+    /* Style of each slide */
+    .admin__field.field.field-clone {
+        background: #ffffff;
+        border: 1px solid #adadad;
+        border-radius: 3px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: all 0.2s ease;
+        transition: box-shadow 0.2s ease;
+        will-change: box-shadow; /* Optimization for modern browsers */
+        
+        /* Add properties for better performance during drag */
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+
+        &:hover {
+            border-color: #8c8c8c;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        + .admin__field {
+            margin-top: 0 !important;
+        }
+
+        label{
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #303030;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+    }
+
+    /* Modernized Magento style inputs */
+    .slide-field {
+        width: 100%;
+        padding: 0.7rem 0.8rem;
+        border: 1px solid #adadad;
+        border-radius: 2px;
+        font-size: 0.95rem;
+        background: #ffffff;
+        color: #303030;
+        transition: all 0.2s ease;
+
+        &:focus {
+            outline: none;
+            border-color: #252525c2;
+            box-shadow: 0 0 0 0.75px #252525c2;
+        }
+
+        &::placeholder {
+            color: #999999;
+        }
+    }
+
+    /* Field groups */
+    .image-field-group, .button-field-group {
+        margin-bottom: 1.5rem;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    /* Input containers */
+    .image-input-container, .btn-url-container {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+    }
+
+    /* Media Gallery Button */
+    .admin__control-btn {
+        padding: 0.6rem 1rem;
+        background: #ffffff;
+        border: 1px solid #adadad;
+        border-radius: 2px;
+        color: #333333;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+
+        &:hover {
+            background: #e3e3e3;
+            border-color: #8c8c8c;
+        }
+    }
+
+    /* Add/Remove Slide Buttons */
+    .clone_remove, .clone_new {
+        display: inline-flex;
+        padding: 0.6rem 1.5rem;
+        align-items: center;
+        font-size: 0.95rem;
+        border-radius: 2.5px;
+        transition: all 0.2s ease;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .clone_new {
+        background: #007bdb;
+        color: #ffffff;
+        border: 1px solid #007bdb;
+        padding: 0.6rem 2rem;
+        font-size: 1.2rem;
+
+        &:hover {
+            background: #0066b3;
+            border-color: #0066b3;
+        }
+    }
+
+    .clone_remove {
+        background: #ffffff;
+        color: #e22626;
+        border: 1px solid #e22626;
+        transition: all 0.25s ease;
+
+        &:hover {
+            background: #e22626d1;
+            color: white;
+        }
+    }
+
+    /* Style for sortable fields */
+    .ui-sortable-handle {
+        cursor: move;
+        position: relative;
+
+        &::before {
+            content: '⋮⋮';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: #666666;
+            font-size: 1.25rem;
+            opacity: 0.7;
+        }
+    }
+
+    /* Stylized Selects */
+    select.admin__control-select {
+        appearance: none;
+        padding: 0.7rem 2.25rem 0.7rem 0.8rem;
+        border: 1px solid #adadad;
+        border-radius: 2px;
+        background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%23666666' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 9l6 6 6-6'/%3E%3C/svg%3E") calc(100% - 8px) center no-repeat;
+        background-size: 14px;
+        font-size: 0.95rem;
+        color: #303030;
+        transition: all 0.2s ease;
+
+        &:focus {
+            outline: none;
+            border-color: #252525c2;
+            box-shadow: 0 0 0 0.75px #252525c2;
+        }
+
+        &:hover {
+            border-color: #8c8c8c;
+        }
+    }
+
+    /* Descriptive notes */
+    .admin__field-note {
+        font-size: 0.95rem;
+        color: #666666;
+        margin-top: 0.5rem;
+        line-height: 1.4;
+    }
+
+    .admin__field-control.control{
+        .widget-option.input-text{
+
+            &:focus{
+                border-color: #252525c2;
+                box-shadow: 0 0 0 0.75px #252525c2;
+            }
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 1400px) {
+        .content.ui-sortable {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 1100px) {
+        .content.ui-sortable {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .content.ui-sortable {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+
+[action*="eniquin_widgetslider_slide_widget"] {
+
+    /* Main Container */
+    .admin__fieldset {
+        display: grid;
+        gap: 1.25rem;
+        padding: 1.25rem;
+        background: #f8f8f8;
+        border: 1px solid #e3e3e3;
+        border-radius: 4px;
+    }
+
+    /* Content Container */
+    .content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.25rem;
+    }
+
+    /* Style of each slide */
+    .admin__field.field.field-clone {
+        background: #ffffff;
+        border: 1px solid #adadad;
+        border-radius: 3px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: box-shadow 0.2s ease;
+        will-change: box-shadow;
+        
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        margin: 0px !important;
+
+        &:hover {
+            border-color: #8c8c8c;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+            cursor: move;
+        }
+
+        + .admin__field {
+            margin: 0 !important;
+        }
+
+        label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #303030;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+    }
+
+    /* Inputs */
+    .slide-field {
+        width: 100%;
+        padding: 0.7rem 0.8rem;
+        border: 1px solid #adadad;
+        border-radius: 2px;
+        font-size: 0.95rem;
+        background: #ffffff;
+        color: #303030;
+        transition: all 0.2s ease;
+
+        &:focus {
+            outline: none;
+            border-color: #252525c2;
+            box-shadow: 0 0 0 0.75px #252525c2;
+        }
+
+        &::placeholder {
+            color: #999999;
+        }
+    }
+
+    /* Field groups */
+    .image-field-group, .button-field-group {
+        margin-bottom: 1.5rem;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    /* Input containers */
+    .image-input-container, .btn-url-container {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+    }
+
+    /* Media Gallery Button */
+    .admin__control-btn {
+        padding: 0.6rem 1rem;
+        background: #ffffff;
+        border: 1px solid #adadad;
+        border-radius: 2px;
+        color: #333333;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+
+        &:hover {
+            background: #e3e3e3;
+            border-color: #8c8c8c;
+        }
+    }
+
+    /* Add/Remove Slide Buttons */
+    .clone_remove, .clone_new {
+        display: inline-flex;
+        padding: 0.6rem 1.5rem;
+        align-items: center;
+        font-size: 0.95rem;
+        border-radius: 2.5px;
+        transition: all 0.2s ease;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .clone_new {
+        background: #007bdb;
+        color: #ffffff;
+        border: 1px solid #007bdb;
+        padding: 0.6rem 2rem;
+        font-size: 1.2rem;
+
+        &:hover {
+            background: #0066b3;
+            border-color: #0066b3;
+        }
+    }
+
+    .clone_remove {
+        background: #ffffff;
+        color: #e22626;
+        border: 1px solid #e22626;
+        transition: all 0.25s ease;
+
+        &:hover {
+            background: #e22626d1;
+            color: white;
+        }
+    }
+
+    /* Style for sortable fields */
+    .ui-sortable-handle {
+        cursor: move;
+        position: relative;
+
+        &::before {
+            content: '⋮⋮';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: #666666;
+            font-size: 1.25rem;
+            opacity: 0.7;
+        }
+    }
+
+    /* Selects */
+    select.admin__control-select {
+        appearance: none;
+        padding: 0.7rem 2.25rem 0.7rem 0.8rem;
+        border: 1px solid #adadad;
+        border-radius: 2px;
+        background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%23666666' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 9l6 6 6-6'/%3E%3C/svg%3E") calc(100% - 8px) center no-repeat;
+        background-size: 14px;
+        font-size: 0.95rem;
+        color: #303030;
+        transition: all 0.2s ease;
+
+        &:focus {
+            outline: none;
+            border-color: #252525c2;
+            box-shadow: 0 0 0 0.75px #252525c2;
+        }
+
+        &:hover {
+            border-color: #8c8c8c;
+        }
+    }
+
+    /* Notes */
+    .admin__field-note {
+        font-size: 0.95rem;
+        color: #666666;
+        margin-top: 0.5rem;
+        line-height: 1.4;
+    }
+
+    .admin__field-control.control {
+        .widget-option.input-text {
+            &:focus {
+                border-color: #252525c2;
+                box-shadow: 0 0 0 0.75px #252525c2;
+            }
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 1400px) {
+        .content {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 1100px) {
+        .content {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .content {
+            grid-template-columns: 1fr;
+        }
+    }
+}

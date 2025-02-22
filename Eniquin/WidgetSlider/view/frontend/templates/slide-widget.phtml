@@ -1,0 +1,238 @@
+<?php
+/**
+ * @var \Eniquin\WidgetSlider\Block\Widget\SlideWidget $block
+ */
+
+// Slides
+$slides = $block->getSlides();
+$slidesCount = count($slides);
+$jsonSlides  = json_encode($slides);
+
+// Identification
+$widgetUid = $block->getWidgetUid();
+
+// General settings
+$mobileBreakpoint = $block->getMobileBreakpoint();
+$slidesPerView    = $block->getSlidesPerView();
+$spaceBetween     = $block->getSpaceBetween();
+$direction        = $block->getDirection();
+$sliderHeight     = $block->getSliderHeight();
+$slidesPerColumn  = $block->getSlidesPerColumn();
+$slidesPerGroup   = $block->getSlidesPerGroup();
+
+// Effects
+$effect           = $block->getEffect();
+$paginationType   = $block->getPaginationType();
+
+// Appearance
+$colorPrimary     = $block->getColorPrimary();
+$colorSecondary   = $block->getColorSecondary();
+$customClass      = $block->getCustomClass();
+$sliderCssClass   = $block->getSliderCssClass(); // NUEVO
+
+// Arrows / Pagination
+$showArrows       = $block->showArrows() ? 'true' : 'false';
+$showPagination   = $block->showPagination() ? 'true' : 'false';
+
+// Autoplay
+$enableAutoplay   = $block->isAutoplayEnabled() ? 'true' : 'false';
+$autoplayDelay    = $block->getAutoplayDelay();
+
+// Build extra config for certain effects
+$extraConfig = '';
+if ($effect === 'cube') {
+    $extraConfig .= "
+        cubeEffect: {
+            shadow: true,
+            slideShadows: true,
+            shadowOffset: 20,
+            shadowScale: 0.94
+        },
+    ";
+} elseif ($effect === 'coverflow') {
+    $extraConfig .= "
+        coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true
+        },
+        centeredSlides: true,
+    ";
+} elseif ($effect === 'flip') {
+    $extraConfig .= "
+        flipEffect: {
+            slideShadows: true
+        },
+    ";
+}
+
+// slidesPerColumn => grid: { rows: X }, slidesPerColumnFill: 'row'
+$gridConfig = '';
+if ($slidesPerColumn > 1) {
+    $gridConfig = "grid: { rows: $slidesPerColumn, fill: 'row' },";
+}
+?>
+<!-- Main container -->
+<div class="eniquin-slider-container <?= $widgetUid ?> <?= $customClass ?>">
+    <div class="my-swiper-container">
+        <!-- To the .swiper class we add the $sliderCssClass -->
+        <div class="swiper mySwiper <?= $sliderCssClass ?>" id="slider-<?= $widgetUid ?>"
+             style="<?= ($direction === 'vertical') ? "height:{$sliderHeight}px;" : '' ?>">
+            
+            <div class="swiper-wrapper" id="my-swiper-wrapper-<?= $widgetUid ?>">
+                <!-- They will be populated via JS -->
+            </div>
+
+            <?php if ($showPagination === 'true'): ?>
+                <div class="swiper-pagination swiper-pagination-<?= $widgetUid ?>"></div>
+            <?php endif; ?>
+
+            <?php if ($showArrows === 'true'): ?>
+                <div class="swiper-button-next swiper-button-next-<?= $widgetUid ?>"></div>
+                <div class="swiper-button-prev swiper-button-prev-<?= $widgetUid ?>"></div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+require(['jquery'], function($) {
+    $(document).ready(function() {
+
+        var slidesData  = <?=$jsonSlides?> || [];
+        var slidesCount = <?=$slidesCount?>;
+
+        // 1) Populate slides
+        var $swiperWrapper = $('#my-swiper-wrapper-<?= $widgetUid ?>');
+        $swiperWrapper.empty();
+
+        slidesData.forEach(function(slide) {
+            var finalSrc = slide.mobile || slide.desktop || '';
+            var buttonsHtml = '';
+
+            if (slide.buttons) {
+                var btns = slide.buttons;
+                var btnContainer = '';
+                btns.forEach(function(btn) {
+                    var txt = (btn.text || '').trim();
+                    var url = (btn.url || '').trim();
+                    if (txt !== '' || url !== '') {
+                        btnContainer += `
+                            <a href="${url}" class="slide-button <?= $widgetUid ?>-button" target="_blank">
+                                ${txt}
+                            </a>`;
+                    }
+                });
+                if (btnContainer) {
+                    buttonsHtml = `<div class="slide-buttons-container">${btnContainer}</div>`;
+                }
+            }
+
+            var slideHtml = `
+                <div class="swiper-slide <?= $widgetUid ?>-slide">
+                    <div class="slide-image-container">
+                        <img src="${finalSrc}" alt="Slide" class="<?= $widgetUid ?>-slide-image" />
+                        ${buttonsHtml}
+                    </div>
+                </div>
+            `;
+            $swiperWrapper.append(slideHtml);
+        });
+
+        // 2) Build the config
+        var swiperConfig = {
+            loop: true,
+            slidesPerView: <?=$slidesPerView?>,
+            slidesPerGroup: <?=$slidesPerGroup?>,
+            spaceBetween: <?=$spaceBetween?>,
+            direction: '<?=$direction?>',
+            effect: '<?=$effect?>',
+            <?=$extraConfig?>
+            <?=$gridConfig?>
+
+            pagination: (<?=$showPagination?>) ? {
+                el: '.swiper-pagination-<?= $widgetUid ?>',
+                clickable: true,
+                type: '<?=$paginationType?>'
+            } : false,
+            navigation: (<?=$showArrows?>) ? {
+                nextEl: '.swiper-button-next-<?= $widgetUid ?>',
+                prevEl: '.swiper-button-prev-<?= $widgetUid ?>'
+            } : false,
+            autoplay: (<?=$enableAutoplay?>) ? {
+                delay: <?=$autoplayDelay?>,
+                disableOnInteraction: false
+            } : false,
+        };
+
+        // 3) Initialize Swiper only if there are slides
+        if (slidesCount > 0) {
+            var swiper = new Swiper('#slider-<?= $widgetUid ?>', swiperConfig);
+
+            // Settings if the direction is vertical
+            if ('<?=$direction?>' === 'vertical') {
+                // Reposition arrows
+                if (<?=$showArrows?>) {
+                    // 'Prev' (up) arrow, points up:
+                    $('.swiper-button-prev-<?= $widgetUid ?>').css({
+                        top: '30px',
+                        bottom: 'auto',
+                        left: '50%',
+                        transform: 'translateX(-50%) rotate(90deg)' // Apunta hacia arriba
+                    });
+                    // 'Next' arrow (down), points down:
+                    $('.swiper-button-next-<?= $widgetUid ?>').css({
+                        bottom: '10px',
+                        top: 'auto',
+                        left: '50%',
+                        transform: 'translateX(-50%) rotate(88deg)' // Apunta hacia abajo
+                    });
+                }
+                // Move pagination to the left
+                if (<?=$showPagination?>) {
+                    $('.swiper-pagination-<?= $widgetUid ?>').css({
+                        left: '10px', 
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        width: 'auto',
+                        height: 'fit-content',
+                    });
+                }
+            }
+
+            // 4) Inject styles for primary/secondary color
+            var styleEl = document.createElement('style');
+            styleEl.innerHTML = `
+                /* Base arrows */
+                #slider-<?= $widgetUid ?> .swiper-button-next,
+                #slider-<?= $widgetUid ?> .swiper-button-prev {
+                    color: ${'<?=$colorPrimary?>'} !important;
+                }
+                /* Hover arrows => secondary color */
+                #slider-<?= $widgetUid ?> .swiper-button-next:hover,
+                #slider-<?= $widgetUid ?> .swiper-button-prev:hover {
+                    color: ${'<?=$colorSecondary?>'} !important;
+                }
+
+                /* Bullets => primary color */
+                #slider-<?= $widgetUid ?> .swiper-pagination-bullet {
+                    background-color: ${'<?=$colorPrimary?>'} !important;
+                    opacity: 1 !important;
+                }
+                /* Bullets => hover/active secondary color */
+                #slider-<?= $widgetUid ?> .swiper-pagination-bullet:hover,
+                #slider-<?= $widgetUid ?> .swiper-pagination-bullet-active {
+                    background-color: ${'<?=$colorSecondary?>'} !important;
+                }
+            `;
+            document.head.appendChild(styleEl);
+
+        } else {
+            console.error('No slides available for Swiper.');
+        }
+
+    });
+});
+</script>

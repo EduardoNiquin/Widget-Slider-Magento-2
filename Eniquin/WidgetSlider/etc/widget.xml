@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+
+    <widget id="eniquin_widgetslider_slide_widget"
+            class="Eniquin\WidgetSlider\Block\Widget\SlideWidget">
+        <label translate="true">Eniquin Slider Widget</label>
+        <description translate="true">
+            Widget to display Slides with image and up to 3 buttons, using SwiperJS.
+        </description>
+        <parameters>
+
+            <!-- ### 1) Dynamic Slides ### -->
+            <parameter name="slides" xsi:type="block" visible="true" sort_order="10">
+                <label translate="true">Slides</label>
+                <block class="Eniquin\WidgetSlider\Block\Adminhtml\Widget\Dynamic">
+                    <data>
+                        <item name="label" xsi:type="string">Slide</item>
+                        <item name="element" xsi:type="string">Eniquin\WidgetSlider\Block\Adminhtml\Widget\Slide</item>
+                        <item name="label_add_row" xsi:type="string">Add Slide</item>
+                        <item name="label_remove_row" xsi:type="string">Remove Slide</item>
+                    </data>
+                </block>
+            </parameter>
+
+            <!-- ### 2) General Configuration ### -->
+            <parameter name="mobile_breakpoint" xsi:type="text" visible="true" sort_order="20">
+                <label translate="true">Mobile Breakpoint (px)</label>
+                <description translate="true">Maximum width in pixels to apply mobile configuration (default 768).</description>
+                <value>768</value>
+            </parameter>
+
+            <parameter name="slides_per_view" xsi:type="text" visible="true" sort_order="30">
+                <label translate="true">Slides per View</label>
+                <description translate="true">Number of slides visible at the same time.</description>
+                <value>1</value>
+            </parameter>
+
+            <parameter name="slides_per_column" xsi:type="text" visible="true" sort_order="34">
+                <label translate="true">Slides per Column (Grid Rows)</label>
+                <description translate="true">Number of slides per grid row. Requires slidesPerColumnFill='row'.</description>
+                <value>1</value>
+            </parameter>
+
+            <parameter name="slides_per_group" xsi:type="text" visible="true" sort_order="35">
+                <label translate="true">Slides per Group (Slides to move at once)</label>
+                <description translate="true">How many slides advance per transition. Default 1.</description>
+                <value>1</value>
+            </parameter>
+
+            <parameter name="space_between" xsi:type="text" visible="true" sort_order="31">
+                <label translate="true">Space Between (px)</label>
+                <description translate="true">Space in pixels between the slides.</description>
+                <value>0</value>
+            </parameter>
+
+            <parameter name="direction" xsi:type="select" visible="true" sort_order="32">
+                <label translate="true">Slider Direction</label>
+                <options>
+                    <option name="horizontal" value="horizontal" selected="true">
+                        <label translate="true">Horizontal (Default)</label>
+                    </option>
+                    <option name="vertical" value="vertical">
+                        <label translate="true">Vertical</label>
+                    </option>
+                </options>
+            </parameter>
+
+            <parameter name="slider_height" xsi:type="text" visible="true" sort_order="33">
+                <label translate="true">Slider Height (px) [Vertical Mode]</label>
+                <description translate="true">Fixed height in pixels for the slider in vertical mode.</description>
+                <value>600</value>
+            </parameter>
+
+            <!-- ### 3) Effects Configuration ### -->
+            <parameter name="effect" xsi:type="select" visible="true" sort_order="40">
+                <label translate="true">Slider Effect</label>
+                <options>
+                    <option name="slide" value="slide" selected="true">
+                        <label translate="true">Slide</label>
+                    </option>
+                    <option name="fade" value="fade">
+                        <label translate="true">Fade</label>
+                    </option>
+                    <option name="cube" value="cube">
+                        <label translate="true">Cube</label>
+                    </option>
+                    <option name="coverflow" value="coverflow">
+                        <label translate="true">Coverflow</label>
+                    </option>
+                    <option name="flip" value="flip">
+                        <label translate="true">Flip</label>
+                    </option>
+                </options>
+            </parameter>
+
+            <parameter name="pagination_type" xsi:type="select" visible="true" sort_order="41">
+                <label translate="true">Pagination Type</label>
+                <options>
+                    <option name="bullets" value="bullets" selected="true">
+                        <label translate="true">Bullets</label>
+                    </option>
+                    <option name="fraction" value="fraction">
+                        <label translate="true">Fraction</label>
+                    </option>
+                    <option name="progressbar" value="progressbar">
+                        <label translate="true">Progress Bar</label>
+                    </option>
+                </options>
+            </parameter>
+
+            <!-- ### 4) Appearance and Other Configurations ### -->
+            <parameter name="color_primary" xsi:type="text" visible="true" sort_order="50">
+                <label translate="true">Primary Color (Hex/RGB)</label>
+                <value>#007aff</value>
+            </parameter>
+
+            <parameter name="color_secondary" xsi:type="text" visible="true" sort_order="51">
+                <label translate="true">Secondary Color (Hover/Active)</label>
+                <value>#ff0000</value>
+            </parameter>
+
+            <parameter name="show_arrows" xsi:type="select" visible="true" sort_order="60">
+                <label translate="true">Show Arrows?</label>
+                <options>
+                    <option name="no" value="0" selected="true">
+                        <label translate="true">No</label>
+                    </option>
+                    <option name="yes" value="1">
+                        <label translate="true">Yes</label>
+                    </option>
+                </options>
+            </parameter>
+
+            <parameter name="show_pagination" xsi:type="select" visible="true" sort_order="61">
+                <label translate="true">Show Pagination?</label>
+                <options>
+                    <option name="no" value="0" selected="true">
+                        <label translate="true">No</label>
+                    </option>
+                    <option name="yes" value="1">
+                        <label translate="true">Yes</label>
+                    </option>
+                </options>
+            </parameter>
+
+            <parameter name="enable_autoplay" xsi:type="select" visible="true" sort_order="62">
+                <label translate="true">Enable Autoplay?</label>
+                <options>
+                    <option name="no" value="0" selected="true">
+                        <label translate="true">No</label>
+                    </option>
+                    <option name="yes" value="1">
+                        <label translate="true">Yes</label>
+                    </option>
+                </options>
+            </parameter>
+
+            <parameter name="autoplay_delay" xsi:type="text" visible="true" sort_order="63">
+                <label translate="true">Autoplay Delay (ms)</label>
+                <value>3000</value>
+            </parameter>
+
+            <parameter name="slider_css_class" xsi:type="text" visible="true" sort_order="36">
+                <label translate="true">Slider CSS Class (for .swiper)</label>
+                <description translate="true">Additional classes for the .swiper container (do not confuse with custom_class of .eniquin-slider-container).</description>
+            </parameter>
+
+        </parameters>
+    </widget>
+</widgets>
