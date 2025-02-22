@@ -24,7 +24,7 @@ Thanks to **Eniquin_WidgetSlider**, you can create dynamic *slides* from the Mag
 5. [🎨 Rendering the Slider in the Frontend](#rendering-the-slider-in-the-frontend)
 6. [💡 Technical Explanation of Files](#technical-explanation-of-files)
 7. [🛠️ Customization Options](#customization-options)
-8. [📚 How to Insert the Widget in a [#how-to-insert-widget-on-a-page]
+8. [📚 How to Insert the Widget in a page](#how-to-insert-widget-on-a-page)
 9. [🔄 Contributions](#contributions)
 10. [📜 License](#license)
 
