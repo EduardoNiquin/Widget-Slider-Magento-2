@@ -37,7 +37,7 @@ Para instalar el módulo en **Magento 2**, sigue estos pasos:
 
 1. **Descarga o clona** este repositorio en la carpeta `app/code/Eniquin/WidgetSlider` dentro de tu instalación de Magento:
    ```bash
-   git clone https://github.com/turepositorio/Eniquin_WidgetSlider.git app/code/Eniquin/WidgetSlider
+   git clone https://github.com/EduardoNiquin/Eniquin_WidgetSlider.git
    ```
 
 2. Pon la carpeta Eniquin en tu **/app/code**
