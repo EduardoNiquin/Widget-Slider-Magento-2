@@ -36,30 +36,32 @@ To install the module in **Magento 2**, follow these steps:
 
 1. **Download or clone** this repository to the `app/code/Eniquin/WidgetSlider` folder inside your Magento installation:
 ```bash
-git clone https://github.com/yourrepository/Eniquin_WidgetSlider.git app/code/Eniquin/WidgetSlider
+git clone https://github.com/EduardoNiquin/Eniquin_WidgetSlider.git
 ```
 
-2. **Enable the module** by running:
+2. Put the Eniquin folder in your **/app/code**
+
+3. **Enable the module** by running:
 ```bash
 bin/magento module:enable Eniquin_WidgetSlider
 ```
 
-3. **Run the database update**:
+4. **Run the database update**:
 ```bash
 bin/magento setup:upgrade
 ```
 
-4. **Compile Magento code** (required in production):
+5. **Compile Magento code** (required in production):
 ```bash
 bin/magento setup:di:compile
 ```
 
-5. **Clear cache** to apply changes:
+6. **Clear cache** to apply changes:
 ```bash
 bin/magento cache:flush
 ```
 
-6. **(Optional)** If you are in production mode, you can deploy the static files:
+7. **(Optional)** If you are in production mode, you can deploy the static files:
 ```bash
 bin/magento setup:static-content:deploy -f
 ```
